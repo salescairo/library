@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Utils\Message;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
 use ProtoneMedia\Splade\Facades\Toast;
 
 class ReserveBookRequest extends FormRequest
@@ -22,10 +24,9 @@ class ReserveBookRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        parent::failedValidation($validator);
-        Toast::title(title: 'Ops')
-            ->message($validator->errors()->first())
-            ->centerBottom()
-            ->autoDismiss(afterSeconds: 20);
+        Message::danger(message: $validator->errors()->first());
+        throw (new ValidationException($validator))
+            ->errorBag($this->errorBag)
+            ->redirectTo($this->getRedirectUrl());
     }
 }

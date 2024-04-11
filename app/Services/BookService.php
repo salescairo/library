@@ -9,6 +9,7 @@ use App\Infra\Contracts\BrandInterface;
 use App\Infra\Contracts\BookInterface;
 use App\Infra\Contracts\GenderInterface;
 use App\Models\Book;
+use App\Utils\Message;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -59,6 +60,11 @@ class BookService
 
     public function delete(int $id): bool
     {
+        $model = $this->findById($id);
+        if (count($model->bookOutputs) > 0) {
+            Message::danger();
+            return false;
+        }
         return $this->repository->delete($id);
     }
 

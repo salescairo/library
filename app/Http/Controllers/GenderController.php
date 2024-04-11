@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BrandRequest;
 use App\Services\GenderService;
+use App\Utils\Message;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -40,6 +41,7 @@ class GenderController
     public function store(BrandRequest $request): RedirectResponse
     {
         $this->service->save($request->all());
+        Message::success();
         return back();
     }
 
@@ -50,6 +52,7 @@ class GenderController
             return back();
         }
         $this->service->update($id, $request->all());
+        Message::success();
         return back();
     }
 
@@ -59,7 +62,8 @@ class GenderController
         if (is_null($model)) {
             return back();
         }
-        $this->service->delete($id);
+        $result = $this->service->delete($id);
+        $result && Message::success();
         return back();
     }
 }
