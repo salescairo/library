@@ -1,0 +1,49 @@
+version: "3.7"
+services:
+  app:
+    container_name: app
+    build:
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www/html
+    depends_on:
+      - postgres
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - library-network
+
+  postgres:
+    image: postgres:14-alpine
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+    ports:
+      - 5433:${DB_PORT}
+    volumes:
+      - ./infra/db:/var/lib/postgresql/data
+    networks:
+      - library-network
+
+  nginx:
+    platform: linux/amd64
+    image: nginx:latest
+    container_name: nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www/html
+      - ./infra/nginx/:/etc/nginx/conf.d/
+    networks:
+      - library-network
+
+networks:
+  library-network:
+    driver: bridge

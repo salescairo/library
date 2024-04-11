@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.navbar{
+    background: rgb(242, 244, 251);
+}
