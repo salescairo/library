@@ -68,13 +68,17 @@
     "isDynamicEntry": true,
     "src": "node_modules/flatpickr/dist/esm/index.js"
   },
+  "resources/images/logo.png": {
+    "file": "assets/logo-7c2655ad.png",
+    "src": "resources/images/logo.png"
+  },
   "resources/js/app.css": {
-    "file": "assets/app-51c96c96.css",
+    "file": "assets/app-702f8508.css",
     "src": "resources/js/app.css"
   },
   "resources/js/app.js": {
     "css": [
-      "assets/app-51c96c96.css"
+      "assets/app-702f8508.css"
     ],
     "dynamicImports": [
       "node_modules/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.esm.js",
@@ -92,7 +96,7 @@
       "_nprogress-e771348b.js",
       "node_modules/@protonemedia/laravel-splade/dist/CompilerErrorMessages-6b34f14b.js"
     ],
-    "file": "assets/app-ccb9d5f3.js",
+    "file": "assets/app-455063b4.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }

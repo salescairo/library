@@ -37,6 +37,10 @@ Route::middleware('splade')->group(function () {
             Route::get('/livros/{id}/alugar', [\App\Http\Controllers\BookController::class, 'rentCreate'])->name('book.rent.create');
             Route::post('/livros/{id}/alugar', [\App\Http\Controllers\BookController::class, 'rentStore'])->name('book.rent.store');
             Route::put('/livros/{id}/devolver', [\App\Http\Controllers\BookController::class, 'return'])->name('book.return');
+
+            Route::get('/livros/{id}/reservar', [\App\Http\Controllers\BookController::class, 'reserveCreate'])->name('book.reserve.create');
+            Route::put('/livros/{id}/reservar', [\App\Http\Controllers\BookController::class, 'reserve'])->name('book.reserve');
+            Route::put('/livros/{id}/remover-reserva', [\App\Http\Controllers\BookController::class, 'unreserve'])->name('book.unreserve');
         });
 
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

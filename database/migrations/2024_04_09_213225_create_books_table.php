@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('year');
+            $table->string('reserved_for')->nullable();
             $table->string('situation')->default(value: Book::AVAILABLE_SITUATION);
             $table->foreignId('gender_id')->references('id')->on('genders');
             $table->foreignId('brand_id')->references('id')->on('brands');

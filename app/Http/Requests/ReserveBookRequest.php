@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use ProtoneMedia\Splade\Facades\Toast;
 
-class BookOutputRequest extends FormRequest
+class ReserveBookRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -16,10 +16,7 @@ class BookOutputRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'book_id' => ['required', 'integer', 'exists:App\Models\Book,id'],
-            'name' => ['required', 'string', 'min:3'],
-            'identification' => ['required', 'string', 'min:4'],
-            'return_date' => ['required', 'date'],
+            'name' => ['required', 'string', 'min:2', 'max:80'],
         ];
     }
 

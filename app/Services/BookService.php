@@ -75,4 +75,10 @@ class BookService
         $model = $this->findById($id);
         $model->return();
     }
+
+    public function reserve(int $id, string $reserved_for = null): void
+    {
+        $model = $this->findById($id);
+        $model->reserve($reserved_for);
+    }
 }

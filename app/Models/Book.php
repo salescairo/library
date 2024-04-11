@@ -17,6 +17,7 @@ class Book extends Model
     public const SITUATION_FIELD = 'situation';
     public const BRAND_ID = 'brand_id';
     public const GENDER_ID = 'gender_id';
+    public const RESERVED_FOR = 'gender_id';
 
 
     public const AVAILABLE_SITUATION = 'Disponível';
@@ -27,6 +28,7 @@ class Book extends Model
         'name',
         'year',
         'situation',
+        'reserved_for',
         'brand_id',
         'gender_id',
     ];
@@ -87,8 +89,26 @@ class Book extends Model
         $this->save();
     }
 
+    public function reserve(?string $name): void
+    {
+        $situation = is_null($name) ? self::AVAILABLE_SITUATION : self::RESERVED_SITUATION;
+        $this->reserved_for = $name;
+        $this->updateSituation($situation);
+        $this->save();
+    }
+
     public function itsAvailable(): bool
     {
         return $this->situation == self::AVAILABLE_SITUATION;
+    }
+
+    public function itsReserved(): bool
+    {
+        return $this->situation == self::RESERVED_SITUATION;
+    }
+
+    public function itsRented(): bool
+    {
+        return $this->situation == self::RENTED_SITUATION;
     }
 }

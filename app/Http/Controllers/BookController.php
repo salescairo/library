@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RentRequest;
+use App\Http\Requests\ReserveBookRequest;
 use App\Services\BookService;
 use App\Services\BrandService;
 use App\Services\GenderService;
@@ -53,7 +54,9 @@ class BookController
             return back();
         }
         return response()->view('model.book.show', [
-            'model' => $model
+            'model' => $model,
+            'brands' => $this->brand_service->findEnabledAll(),
+            'genders' => $this->gender_service->findEnabledAll()
         ]);
     }
 
@@ -100,7 +103,6 @@ class BookController
         return back();
     }
 
-
     public function return(int $id): RedirectResponse|Response
     {
         $model = $this->service->findById($id);
@@ -108,6 +110,37 @@ class BookController
             return back();
         }
         $this->service->return($id);
+        return back();
+    }
+
+    public function reserveCreate(int $id): RedirectResponse|Response
+    {
+        $model = $this->service->findById($id);
+        if (is_null($model)) {
+            return back();
+        }
+        return response()->view('model.book.reserve', [
+            'model' => $model
+        ]);
+    }
+
+    public function reserve(ReserveBookRequest $request, int $id): RedirectResponse|Response
+    {
+        $model = $this->service->findById($id);
+        if (is_null($model)) {
+            return back();
+        }
+        $this->service->reserve($id, $request->get(key: 'name'));
+        return back();
+    }
+
+    public function unreserve(int $id): RedirectResponse|Response
+    {
+        $model = $this->service->findById($id);
+        if (is_null($model)) {
+            return back();
+        }
+        $this->service->reserve($id);
         return back();
     }
 }
