@@ -7,6 +7,7 @@ use App\Http\Requests\ReserveBookRequest;
 use App\Services\BookService;
 use App\Services\BrandService;
 use App\Services\GenderService;
+use App\Utils\Message;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -63,6 +64,7 @@ class BookController
     public function store(BookRequest $request): RedirectResponse
     {
         $this->service->save($request->all());
+        Message::success();
         return back();
     }
 
@@ -73,6 +75,7 @@ class BookController
             return back();
         }
         $this->service->update($id, $request->all());
+        Message::success();
         return back();
     }
 
@@ -82,7 +85,8 @@ class BookController
         if (is_null($model)) {
             return back();
         }
-        $this->service->delete($id);
+        $result = $this->service->delete($id);
+        $result && Message::success();
         return back();
     }
 
@@ -100,6 +104,7 @@ class BookController
     public function rentStore(RentRequest $request, int $id): RedirectResponse|Response
     {
         $this->service->rent($id, $request->all());
+        Message::success();
         return back();
     }
 
@@ -110,6 +115,7 @@ class BookController
             return back();
         }
         $this->service->return($id);
+        Message::success();
         return back();
     }
 
@@ -131,6 +137,7 @@ class BookController
             return back();
         }
         $this->service->reserve($id, $request->get(key: 'name'));
+        Message::success();
         return back();
     }
 
@@ -141,6 +148,7 @@ class BookController
             return back();
         }
         $this->service->reserve($id);
+        Message::success();
         return back();
     }
 }

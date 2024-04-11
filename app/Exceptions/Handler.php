@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use App\Utils\Message;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 use ProtoneMedia\Splade\Facades\Toast;
 use Throwable;
 
@@ -27,13 +29,9 @@ class Handler extends ExceptionHandler
         $this->renderable(\ProtoneMedia\Splade\SpladeCore::exceptionHandler($this));
 
         $this->reportable(function (Throwable $e) {
-            //
         });
         $this->reportable(function (EntityNotFoundException $e) {
-            Toast::title(title: 'Ops')
-                ->message($e->getMessage())
-                ->centerBottom()
-                ->autoDismiss(afterSeconds: 20);
+            Message::danger(message: $e->getMessage());
         });
     }
 }
